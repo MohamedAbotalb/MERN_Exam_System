@@ -1,11 +1,24 @@
-import React from 'react'
+import React from 'react';
 import { NavBar } from '../components/NavBar';
+import { Sidebar } from '../components/Sidebar';
 import { Outlet } from 'react-router-dom';
-export  function SharedLayout() {
+import { Container, Row, Col } from 'react-bootstrap';
+
+export function SharedLayout() {
   return (
     <>
       <NavBar />
-      <Outlet />
+
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-2">
+          <Sidebar/>
+        </div>
+        <div className="col-10">
+          <Outlet/>
+        </div>
+      </div>
+    </div>
     </>
   );
 }

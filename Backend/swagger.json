@@ -1,0 +1,35 @@
+{
+  "swaggerDefinition": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Exam System",
+      "version": "1.0.0",
+      "description": "simple exam system",
+      "contact": {
+        "email": "mohamed.abotalb277@gmail.com"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8080/api/v1"
+      }
+    ],
+    "consume": "application/json",
+    "produces": "application/json",
+    "components": {
+      "securitySchemes": {
+        "jwt_auth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": [
+      {
+        "jwt_auth": []
+      }
+    ]
+  },
+  "apis": ["./src/routes/api/*.js"]
+}

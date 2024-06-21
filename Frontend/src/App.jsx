@@ -1,4 +1,3 @@
-import "./App.css";
 import React from "react";
 import {
   Route,
@@ -9,7 +8,7 @@ import {
 import { SharedLayout } from "./layouts/SharedLayout";
 
 function App() {
-  const router = createBrowserRouter(
+  const router = createBrowserRouter( 
     createRoutesFromElements(
       <>
         <Route path="/" element={<SharedLayout />}></Route>

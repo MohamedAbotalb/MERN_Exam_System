@@ -20,7 +20,7 @@ const authRouter = require('./routes/api/auth.route');
 
 const app = express();
 const DB_URL = process.env.MONGODBURL;
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 mongoose

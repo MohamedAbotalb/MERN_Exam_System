@@ -1,24 +1,20 @@
-import React from "react";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
-import { SharedLayout } from "./layouts/SharedLayout";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { SharedLayout } from './layouts/SharedLayout';
+import AdminDashboard from './pages/AdminDashboard';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
 
-function App() {
-  const router = createBrowserRouter( 
-    createRoutesFromElements(
-      <>
-        <Route path="/" element={<SharedLayout />}></Route>
-      </>
-    )
-  );
+const App = () => {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route path="AdminDashboard/*" element={<AdminDashboard />} />
+        <Route path="StudentDashboard/*" element={<AdminDashboard />} />
+
+      </Route>
+    </Routes>
   );
-}
+};
+
 export default App;

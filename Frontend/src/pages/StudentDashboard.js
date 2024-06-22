@@ -9,14 +9,18 @@ const StudentDashboard = () => {
     <div>
       <nav>
         <ul>
-          <li><Link to="exams">Exams</Link></li>
-          <li><Link to="results">View Results</Link></li>
+          <li>
+            <Link to='Exams'>Exams</Link>
+          </li>
+          <li>
+            <Link to='ViewResults'>View Results</Link>
+          </li>
         </ul>
       </nav>
       <Routes>
-        <Route path="exams" element={<Exams />} />
-        <Route path="exams/:examId" element={<TakeExam />} />
-        <Route path="results" element={<ViewResults />} />
+        <Route path='Exams' element={<Exams />} />
+        <Route path='Exams/:examId' element={<TakeExam />} />
+        <Route path='Results' element={<ViewResults />} />
       </Routes>
     </div>
   );

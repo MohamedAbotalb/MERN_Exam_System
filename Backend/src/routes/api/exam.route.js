@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { isAdmin } = require('../../middlewares/auth.middleware');
+const { isAdmin, isUser } = require('../../middlewares/auth.middleware');
 const {
   addExam,
   getExam,
@@ -90,7 +90,7 @@ router.get('/', getExams);
  *       500:
  *         description: Server error
  */
-router.get('/available', getAvailableExamsForUser);
+router.get('/available', isUser, getAvailableExamsForUser);
 
 /**
  * @openapi

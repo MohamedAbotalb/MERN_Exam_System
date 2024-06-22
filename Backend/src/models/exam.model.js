@@ -11,6 +11,18 @@ const examSchema = new Schema({
       ref: 'Question',
     },
   ],
+  totalQuestions: {
+    type: Number,
+    required: true,
+  },
+  totalMarks: {
+    type: Number,
+    required: true,
+  },
+  passMarks: {
+    type: Number,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

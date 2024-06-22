@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../axiosConfig';
 
+// Async actions for fetching, adding, updating, and deleting exams
 export const fetchExams = createAsyncThunk('exams/fetchExams', async () => {
   const response = await axios.get('/exams');
   return response.data;
@@ -21,33 +22,77 @@ export const deleteExam = createAsyncThunk('exams/deleteExam', async (id) => {
   return id;
 });
 
+export const fetchExamById = createAsyncThunk('exams/fetchExamById', async (id) => {
+  const response = await axios.get(`/exams/${id}`);
+  return response.data;
+});
+
 const examsSlice = createSlice({
   name: 'exams',
   initialState: {
     exams: {
       data: [],
+      status: 'idle',
+      error: null
     },
+    currentExam: {
+      data: null,
+      status: 'idle',
+      error: null
+    },
+    answers: {},
+    submissionStatus: 'idle',
+    submissionError: null
   },
-  reducers: {},
+  reducers: {
+    updateAnswers: (state, action) => {
+      const { questionId, answer } = action.payload;
+      state.answers[questionId] = answer;
+    },
+    resetExamState: (state) => {
+      state.currentExam = { data: null, status: 'idle', error: null };
+      state.answers = {};
+      state.submissionStatus = 'idle';
+      state.submissionError = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
+      // Existing cases
+      .addCase(fetchExams.pending, (state) => {
+        state.exams.status = 'loading';
+      })
       .addCase(fetchExams.fulfilled, (state, action) => {
+        state.exams.status = 'succeeded';
         state.exams.data = action.payload.data;
       })
-      .addCase(addExam.fulfilled, (state, action) => {
-        state.exams.data.push(action.payload.data);
+      .addCase(fetchExams.rejected, (state, action) => {
+        state.exams.status = 'failed';
+        state.exams.error = action.error.message;
       })
-      .addCase(updateExam.fulfilled, (state, action) => {
-        const index = state.exams.data.findIndex(exam => exam._id === action.payload.data._id);
-        if (index !== -1) {
-          state.exams.data[index] = action.payload.data;
-        }
+      // Additional cases for other async thunks...
+      .addCase(fetchExamById.pending, (state) => {
+        state.currentExam.status = 'loading';
       })
-      .addCase(deleteExam.fulfilled, (state, action) => {
-        state.exams.data = state.exams.data.filter(exam => exam._id !== action.payload);
+      .addCase(fetchExamById.fulfilled, (state, action) => {
+        state.currentExam.status = 'succeeded';
+        state.currentExam.data = action.payload.data;
+      })
+      .addCase(fetchExamById.rejected, (state, action) => {
+        state.currentExam.status = 'failed';
+        state.currentExam.error = action.error.message;
       });
   },
 });
 
+// Selectors
 export const selectAllExams = (state) => state.exams.exams.data;
+export const selectCurrentExam = (state) => state.exams.currentExam.data;
+export const selectExamStatus = (state) => state.exams.currentExam.status; // Added this line
+export const selectAnswers = (state) => state.exams.answers;
+export const selectSubmissionStatus = (state) => state.exams.submissionStatus;
+export const selectSubmissionError = (state) => state.exams.submissionError;
+
+export const { updateAnswers, resetExamState } = examsSlice.actions;
+
 export default examsSlice.reducer;

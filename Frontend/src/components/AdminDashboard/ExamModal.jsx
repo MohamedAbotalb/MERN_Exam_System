@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addExam, updateExam } from '../../store/examsSlice';
+import { addExam, updateExam,fetchExams } from '../../store/examsSlice';
 
 const ExamModal = ({ show, onHide, exam }) => {
   const dispatch = useDispatch();
@@ -32,12 +32,12 @@ const ExamModal = ({ show, onHide, exam }) => {
       return;
     }
     const examData = { name, totalMarks, passMarks, totalQuestions };
-    if (exam) {
-      dispatch(updateExam({ id: exam._id, updatedExam: examData }));
-    } else {
-      dispatch(addExam(examData));
-    }
-    onHide();
+    const action = exam ? updateExam({ id: exam._id, updatedExam: examData }): addExam(examData);
+    dispatch(action)
+      .then(() => {
+        dispatch(fetchExams());
+        onHide();
+      });
   };
 
   return (

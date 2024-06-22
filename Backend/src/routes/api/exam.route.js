@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { isAdmin, isUser } = require('../../middlewares/auth.middleware');
 const {
   addExam,
+  getExamsCount,
   getExam,
   getExams,
   updateExam,
@@ -92,6 +93,12 @@ router.get('/', getExams);
  */
 router.get('/available', isUser, getAvailableExamsForUser);
 
+router.get(
+  '/count',
+  isAdmin,
+  getExamsCount
+);
+
 /**
  * @openapi
  * /exams/{examId}:
@@ -111,6 +118,7 @@ router.get('/available', isUser, getAvailableExamsForUser);
  *       500:
  *         description: Server error
  */
+
 router.get('/:examId', getExam);
 
 /**
@@ -364,6 +372,7 @@ router.delete(
   validationResult,
   removeQuestionFromExam
 );
+
 
 /**
  * @openapi

@@ -26,16 +26,11 @@ const Exams = () => {
     };
 
     return (
-        <div className="container-fluid">
-            <div className="row align-items-center">
-                <div className="col-md-6">
-                    <h1 className="mt-4">Exams</h1>
+        <div className="container-fluid ">
+            <div>
+                <h2>Exams</h2>
+                <button className="btn btn-primary " onClick={() => handleShowQuestionModal(null)}>Add Exam</button>
                 </div>
-                <div className="col-md-6 text-right">
-                    <button className="btn btn-primary" onClick={() => handleShowQuestionModal(null)}>Add Exam</button>
-                </div>
-            </div>
-            
             <ExamTable exams={exams} onDelete={(id) => dispatch(deleteExam(id))} onAddQuestion={handleShowQuestionModal} />
             <ExamModal />
             <QuestionModal show={showQuestionModal} onHide={handleCloseQuestionModal} examId={selectedExamId} />

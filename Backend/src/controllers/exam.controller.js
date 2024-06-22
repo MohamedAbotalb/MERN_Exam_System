@@ -32,8 +32,8 @@ const getExams = async (req, res, next) => {
 
 const getExam = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const exam = await Exam.findById(id).populate('questions');
+    const { examId } = req.params;
+    const exam = await Exam.findById(examId).populate('questions');
 
     if (!exam)
       return res
@@ -48,10 +48,21 @@ const getExam = async (req, res, next) => {
 
 const updateExam = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { examId } = req.params;
     const { name, totalMarks, passMarks, totalQuestions } = req.body;
+
+    // Check if the updated exam name already exists
+    if (name) {
+      const existingExam = await Exam.findOne({ name, _id: { $ne: examId } });
+      if (existingExam) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'Exam name must be unique' });
+      }
+    }
+
     const exam = await Exam.findByIdAndUpdate(
-      id,
+      examId,
       { name, totalMarks, passMarks, totalQuestions },
       { new: true }
     );

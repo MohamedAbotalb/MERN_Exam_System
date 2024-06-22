@@ -2,11 +2,11 @@ const { Router } = require('express');
 const { isAdmin, isUser } = require('../../middlewares/auth.middleware');
 const {
   addExam,
-  getExamsCount,
   getExam,
   getExams,
   updateExam,
   deleteExam,
+  getExamsCount,
   addQuestionToExam,
   getQuestionsForExam,
   updateQuestionInExam,
@@ -93,11 +93,7 @@ router.get('/', getExams);
  */
 router.get('/available', isUser, getAvailableExamsForUser);
 
-router.get(
-  '/count',
-  isAdmin,
-  getExamsCount
-);
+router.get('/count', isAdmin, getExamsCount);
 
 /**
  * @openapi
@@ -372,7 +368,6 @@ router.delete(
   validationResult,
   removeQuestionFromExam
 );
-
 
 /**
  * @openapi

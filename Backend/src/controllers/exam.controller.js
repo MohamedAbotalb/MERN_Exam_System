@@ -271,15 +271,14 @@ const getAvailableExamsForUser = async (req, res, next) => {
   }
 };
 
-
-const getExamsCount = async(req, res, next)=>{
-  try{
+const getExamsCount = async (req, res, next) => {
+  try {
     const examsCount = await Exam.countDocuments();
-  res.status(200).json({ success: true, data: examsCount });
-} catch (error) {
-  next(error);
-}
-}
+    res.status(200).json({ success: true, data: examsCount });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   addExam,

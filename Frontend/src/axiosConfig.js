@@ -11,6 +11,7 @@ const axiosInstance = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-TOKEN': getCsrfToken(),
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
   withCredentials: true, // Important for CSRF token handling
 });

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const {
   submitResult,
   getAllResults,
+  getResultsCount,
   getResultById,
   getUserResults,
   getResultsForLoggedInUser,
@@ -79,6 +80,13 @@ router.post(
  *                 $ref: '#/components/schemas/Result'
  */
 router.get('/', isAdmin, getAllResults);
+
+router.get(
+  '/count',
+  isAdmin,
+  getResultsCount
+);
+
 
 /**
  * @openapi

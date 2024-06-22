@@ -62,13 +62,15 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
           <Form.Group>
             <Form.Label>Options</Form.Label>
             {options.map((option, index) => (
-              <Form.Control
-                key={index}
-                type='text'
-                className='my-2'
-                value={option}
-                onChange={(e) => handleOptionChange(index, e.target.value)}
-              />
+              <Form.Group key={index}>
+                <Form.Control
+                  type='text'
+                  placeholder={`Enter option ${index + 1}`}
+                  className='my-2'
+                  value={option}
+                  onChange={(e) => handleOptionChange(index, e.target.value)}
+                />
+              </Form.Group>
             ))}
           </Form.Group>
           <Form.Group>

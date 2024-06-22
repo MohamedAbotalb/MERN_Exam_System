@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAllExams, deleteExam } from '../../store/examsSlice';
+import { selectAllExams,fetchExams, deleteExam } from '../../store/examsSlice';
 import { Button, Table } from 'react-bootstrap';
 import ExamModal from './ExamModal';
 import QuestionModal from './QuestionModal'; 
@@ -15,8 +15,12 @@ const ExamTable = () => {
   const [selectedExam, setSelectedExam] = useState(null);
 
   const handleDelete = (id) => {
-    dispatch(deleteExam(id));
+    dispatch(deleteExam(id)).then(() => {
+      dispatch(fetchExams()); // Re-fetch exams after deletion
+  });
   };
+
+
 
   const handleShowAddModal = () => {
     setSelectedExam(null);
@@ -59,12 +63,12 @@ const ExamTable = () => {
               <td>{exam.passMarks}</td>
               <td>{exam.totalQuestions}</td>
               <td>
-                <Button onClick={() => handleShowEditModal(exam)}>Edit</Button>
-                <Button variant="danger" onClick={() => handleDelete(exam._id)}>Delete</Button>
-                <Button variant="info" onClick={() => handleShowQuestionModal(exam._id)}>Add Question</Button>
+                <Button variant="primary" onClick={() => handleShowEditModal(exam)}>Edit</Button>{' '}
+                <Button variant="primary" onClick={() => handleShowQuestionModal(exam._id)}>Add Question</Button>{' '}
                 <Link to={`ViewQuestions/${exam._id}`}>
-                  <Button variant="success">View Questions</Button>
+                  <Button variant="primary">View Questions</Button>{' '}
                 </Link>
+                <Button variant="danger" onClick={() => handleDelete(exam._id)}>Delete</Button>
               </td>
             </tr>
           ))}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchExams, deleteExam } from '../../store/slices/examSlice';
 import ExamTable from './ExamTable';
 import ExamModal from './ExamModal';
-import QuestionModal from './QuestionModal'; // Import the new QuestionModal component
+import QuestionModal from './QuestionModal'; 
 
 const Exams = () => {
     const dispatch = useDispatch();

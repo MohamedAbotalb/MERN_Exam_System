@@ -13,7 +13,7 @@ const Results = () => {
 
   return (
     <div>
-      <h2>Results</h2>
+      <h2 className='my-3'>Results</h2>
       <ResultTable results={results} />
     </div>
   );

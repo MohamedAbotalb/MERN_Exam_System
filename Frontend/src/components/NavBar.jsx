@@ -6,14 +6,14 @@ export function NavBar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("user_name");
-    localStorage.removeItem("user_type");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("role");
 
     navigate("/login");
   };
 
-  const isLoggedIn = localStorage.getItem("auth_token");
+  const isLoggedIn = localStorage.getItem("token");
   return (
     <Navbar bg="dark" variant="dark" >
       <Container>

@@ -26,7 +26,7 @@ const ResultTable = () => {
         <tbody>
           {results.map((result) => (
             <tr key={result._id}>
-              <td>{result.user.name}</td>
+              <td>{result.user.username}</td>
               <td>{result.exam.name}</td>
               <td>{result.score}</td>
               <td>{result.status}</td>

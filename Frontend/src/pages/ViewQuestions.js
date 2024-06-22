@@ -16,7 +16,7 @@ const ViewQuestions = () => {
   return (
     <div>
       <h2>Questions for Exam </h2>
-      <QuestionTable questions={questions} />
+      <QuestionTable questions={questions}  examId={id} />
     </div>
   );
 };

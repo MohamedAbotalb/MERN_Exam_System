@@ -43,29 +43,49 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{questionToEdit ? 'Edit Question' : 'Add Question'}</Modal.Title>
+        <Modal.Title>
+          {questionToEdit ? 'Edit Question' : 'Add Question'}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group>
             <Form.Label>Question</Form.Label>
-            <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <Form.Control
+              type='text'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Options</Form.Label>
             {options.map((option, index) => (
-              <Form.Control key={index} type="text" value={option} onChange={(e) => handleOptionChange(index, e.target.value)} />
+              <Form.Control
+                key={index}
+                type='text'
+                className='my-2'
+                value={option}
+                onChange={(e) => handleOptionChange(index, e.target.value)}
+              />
             ))}
           </Form.Group>
           <Form.Group>
             <Form.Label>Correct Answer</Form.Label>
-            <Form.Control type="text" value={correctAnswer} onChange={(e) => setCorrectAnswer(e.target.value)} />
+            <Form.Control
+              type='text'
+              value={correctAnswer}
+              onChange={(e) => setCorrectAnswer(e.target.value)}
+            />
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>Cancel</Button>
-        <Button variant="primary" onClick={handleAddOrUpdateQuestion}>{questionToEdit ? 'Update Question' : 'Add Question'}</Button>
+        <Button variant='secondary' onClick={onHide}>
+          Cancel
+        </Button>
+        <Button variant='primary' onClick={handleAddOrUpdateQuestion}>
+          {questionToEdit ? 'Update Question' : 'Add Question'}
+        </Button>
       </Modal.Footer>
     </Modal>
   );

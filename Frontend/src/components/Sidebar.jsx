@@ -23,9 +23,14 @@ export function Sidebar() {
           </>
         )}
         {userType === 'student' && (
+          <>
           <li className="nav-item">
-            <NavLink className="nav-link text-white" to="/StudentDashboard/Results">Results</NavLink>
+            <NavLink className="nav-link text-white" to="/StudentDashboard/Exams">Available Exams</NavLink>
+          </li>          
+          <li className="nav-item">
+            <NavLink className="nav-link text-white" to="/StudentDashboard/ViewResults">My Results</NavLink>
           </li>
+          </>
         )}
       </ul>
     </div>

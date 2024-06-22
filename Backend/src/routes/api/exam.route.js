@@ -365,4 +365,46 @@ router.delete(
   removeQuestionFromExam
 );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Question:
+ *       type: object
+ *       properties:
+ *         question:
+ *           type: string
+ *         answer:
+ *           type: string
+ *     Exam:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name of the exam
+ *           example: "Math Exam"
+ *         questions:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Question'
+ *           description: List of question IDs associated with the exam
+ *         totalQuestions:
+ *           type: integer
+ *           description: Total number of questions in the exam
+ *           example: 10
+ *         totalMarks:
+ *           type: integer
+ *           description: Total marks for the exam
+ *           example: 100
+ *         passMarks:
+ *           type: integer
+ *           description: Marks required to pass the exam
+ *           example: 60
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time when the exam was created
+ *           example: "2023-06-22T10:00:00.000Z"
+ */
+
 module.exports = router;

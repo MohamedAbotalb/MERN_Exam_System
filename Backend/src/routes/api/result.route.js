@@ -1,11 +1,21 @@
 const router = require('express').Router();
 const {
   submitResult,
-  getResults,
-  getResult,
+  getAllResults,
+  getResultById,
   getUserResults,
+  getResultsForLoggedInUser,
   deleteResult,
 } = require('../../controllers/result.controller');
+const { isUser, isAdmin } = require('../../middlewares/auth.middleware');
+
+const {
+  validateSubmitResult,
+  validateResultId,
+  validateUserId,
+} = require('../../middlewares/validation/result.validator');
+const validationResult = require('../../middlewares/validation/validationResult');
+
 /**
  * @openapi
  * /results/submit:
@@ -43,7 +53,13 @@ const {
  *                 score:
  *                   type: number
  */
-router.post('/submit', submitResult);
+router.post(
+  '/submit',
+  isUser,
+  validateSubmitResult,
+  validationResult,
+  submitResult
+);
 
 /**
  * @openapi
@@ -62,7 +78,7 @@ router.post('/submit', submitResult);
  *               items:
  *                 $ref: '#/components/schemas/Result'
  */
-router.get('/', getResults);
+router.get('/', isAdmin, getAllResults);
 
 /**
  * @openapi
@@ -85,11 +101,11 @@ router.get('/', getResults);
  *             schema:
  *               $ref: '#/components/schemas/Result'
  */
-router.get('/:id', getResult);
+router.get('/:id', isAdmin, validateResultId, validationResult, getResultById);
 
 /**
  * @openapi
- * /results/user/{user}:
+ * /results/user/{userId}:
  *   get:
  *     tags:
  *       - Result
@@ -110,7 +126,44 @@ router.get('/:id', getResult);
  *               items:
  *                 $ref: '#/components/schemas/Result'
  */
-router.get('/user/:user', getUserResults);
+router.get(
+  '/user/:userId',
+  isAdmin,
+  validateUserId,
+  validationResult,
+  getUserResults
+);
+
+/**
+ * @openapi
+ * /results/user:
+ *   get:
+ *     tags:
+ *       - Results
+ *     summary: Get results for the logged-in user
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved results for the logged-in user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Result'
+ *       401:
+ *         description: Unauthorized - user not authenticated
+ *       404:
+ *         description: No results found for this user
+ *       500:
+ *         description: Server error
+ */
+router.get('/user', isUser, getResultsForLoggedInUser);
 
 /**
  * @openapi

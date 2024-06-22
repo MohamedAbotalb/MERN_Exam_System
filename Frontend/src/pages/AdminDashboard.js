@@ -10,7 +10,7 @@ const AdminDashboard = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="Exams" element={<Exams />} />
-      <Route path="Exam/ViewQuestions/:id" element={<ViewQuestions />} />
+      <Route path="Exams/ViewQuestions/:id" element={<ViewQuestions />} />
       <Route path="Results" element={<Results />} />
     </Routes>
   );

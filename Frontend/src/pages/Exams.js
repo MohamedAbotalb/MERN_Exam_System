@@ -8,10 +8,9 @@ const Exams = () => {
   const exams = useSelector(selectAllExams);
 
   useEffect(() => {
-    if (exams.status === 'idle') {
-      dispatch(fetchExams());
-    }
-  }, [exams.status, dispatch]);
+    dispatch(fetchExams());
+  }, [dispatch]);
+
 
   return (
     <div>

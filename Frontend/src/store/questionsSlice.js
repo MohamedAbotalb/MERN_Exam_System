@@ -1,35 +1,38 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from '../axiosConfig';
 
-// Initial state
 const initialState = {
   questions: [],
   status: 'idle',
   error: null,
 };
 
-// Thunks
 export const fetchQuestions = createAsyncThunk('questions/fetchQuestions', async () => {
-  const response = await axios.get('/api/questions');
+  const response = await axios.get('/questions');
   return response.data;
 });
 
-export const addQuestion = createAsyncThunk('questions/addQuestion', async (newQuestion) => {
-  const response = await axios.post('/api/questions', newQuestion);
+export const fetchQuestionsByExamId = createAsyncThunk('questions/fetchQuestionsByExamId', async (examId) => {
+  const response = await axios.get(`/exams/${examId}/questions`);
+  return response.data; // Ensure to extract 'data' from the response
+});
+
+
+export const addQuestion = createAsyncThunk('questions/addQuestion', async ({ examId, newQuestion }) => {
+  const response = await axios.post(`/exams/${examId}/questions`, newQuestion);
   return response.data;
 });
 
-export const updateQuestion = createAsyncThunk('questions/updateQuestion', async (updatedQuestion) => {
-  const response = await axios.put(`/api/questions/${updatedQuestion.id}`, updatedQuestion);
+export const updateQuestion = createAsyncThunk('questions/updateQuestion', async ({ questionId, updatedQuestion }) => {
+  const response = await axios.put(`/questions/${questionId}`, updatedQuestion);
   return response.data;
 });
 
 export const deleteQuestion = createAsyncThunk('questions/deleteQuestion', async (questionId) => {
-  await axios.delete(`/api/questions/${questionId}`);
+  await axios.delete(`/questions/${questionId}`);
   return questionId;
 });
 
-// Slice
 const questionsSlice = createSlice({
   name: 'questions',
   initialState,
@@ -41,9 +44,20 @@ const questionsSlice = createSlice({
       })
       .addCase(fetchQuestions.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.questions = action.payload;
+        state.questions = action.payload.data;
       })
       .addCase(fetchQuestions.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchQuestionsByExamId.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchQuestionsByExamId.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.questions = action.payload.data;
+      })
+      .addCase(fetchQuestionsByExamId.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
@@ -51,21 +65,18 @@ const questionsSlice = createSlice({
         state.questions.push(action.payload);
       })
       .addCase(updateQuestion.fulfilled, (state, action) => {
-        const index = state.questions.findIndex(question => question.id === action.payload.id);
-        state.questions[index] = action.payload;
+        const index = state.questions.findIndex(question => question._id === action.payload._id);
+        if (index !== -1) {
+          state.questions[index] = action.payload;
+        }
       })
       .addCase(deleteQuestion.fulfilled, (state, action) => {
-        state.questions = state.questions.filter(question => question.id !== action.payload);
+        state.questions = state.questions.filter(question => question._id !== action.payload);
       });
   },
 });
 
-// Selectors
 export const selectAllQuestions = (state) => state.questions.questions;
 
-export const selectQuestionsByExam = createSelector(
-  [selectAllQuestions, (state, examId) => examId],
-  (questions, examId) => questions.filter(question => question.examId === examId)
-);
 
 export default questionsSlice.reducer;

@@ -1,0 +1,32 @@
+.sidebar ul li {
+    background-color: #666;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    text-align: center;
+}
+.sidebar ul li a{
+    border-radius: 6px;
+    text-decoration: none;
+    background-color: #666;
+}
+.sidebar ul li a.active {
+    background-color: #0075ff;
+}
+.sidebar .sideHeader{
+    position: relative;
+
+}
+.sidebar h4::before{
+    content:"";
+    position:absolute;
+    width:0px;
+    height:2px;
+    bottom:-7px;
+    left:50% ;
+    transform:translateX(-50%);
+    background-color: #fff;
+    transition:0.5s;
+}
+.sidebar:hover h4::before{
+    width:80%;
+}

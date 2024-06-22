@@ -15,7 +15,7 @@ export function NavBar() {
 
   const isLoggedIn = localStorage.getItem("auth_token");
   return (
-    <Navbar bg="dark" variant="dark" className="mb-4">
+    <Navbar bg="dark" variant="dark" >
       <Container>
         <Navbar.Brand>Online Exam System</Navbar.Brand>
         <Nav className="ms-auto">

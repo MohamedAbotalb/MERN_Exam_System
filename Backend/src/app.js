@@ -34,9 +34,13 @@ mongoose
 // ****middlewares****
 
 // Define the CORS options
+// const corsOptions = {
+//   credentials: true,
+//   origin: '*',
+// };
 const corsOptions = {
-  credentials: true,
-  origin: '*',
+  origin: 'http://localhost:3000', // your frontend's origin
+  credentials: true, // this allows cookies to be sent
 };
 
 app.use(cors(corsOptions));

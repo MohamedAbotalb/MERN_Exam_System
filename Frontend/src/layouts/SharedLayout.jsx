@@ -3,6 +3,7 @@ import { NavBar } from '../components/NavBar';
 import { Sidebar } from '../components/Sidebar';
 import { Outlet } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import '../css/sidebar.css'
 
 export function SharedLayout() {
   return (
@@ -11,7 +12,7 @@ export function SharedLayout() {
 
     <div className="container-fluid">
       <div className="row">
-        <div className="col-2">
+        <div className="side p-0 col-2">
           <Sidebar/>
         </div>
         <div className="col-10">

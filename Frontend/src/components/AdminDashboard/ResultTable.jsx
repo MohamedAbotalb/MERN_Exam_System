@@ -1,30 +1,41 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectAllResults } from '../../store/resultsSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchResults, selectAllResults } from '../../store/resultsSlice';
 import { Table } from 'react-bootstrap';
 
 const ResultTable = () => {
+  const dispatch = useDispatch();
   const results = useSelector(selectAllResults);
 
+  useEffect(() => {
+    dispatch(fetchResults());
+  }, [dispatch]);
+
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Student Name</th>
-          <th>Exam Name</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {results.map((result) => (
-          <tr key={result.id}>
-            <td>{result.studentName}</td>
-            <td>{result.examName}</td>
-            <td>{result.score}</td>
+    <div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Exam</th>
+            <th>Score</th>
+            <th>Status</th>
+            <th>Date</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {results.map((result) => (
+            <tr key={result._id}>
+              <td>{result.user.name}</td>
+              <td>{result.exam.name}</td>
+              <td>{result.score}</td>
+              <td>{result.status}</td>
+              <td>{new Date(result.createdAt).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 

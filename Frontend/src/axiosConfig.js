@@ -17,9 +17,9 @@ const axiosInstance = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-TOKEN': getCsrfToken(),
-    'Authorization': `Bearer ${getToken()}`, // Initial token fetch
+    'Authorization': `Bearer ${getToken()}`,
   },
-  withCredentials: true, // Important for CSRF token handling
+  withCredentials: true,
 });
 
 // Request interceptor to attach the CSRF token and Authorization token to each request

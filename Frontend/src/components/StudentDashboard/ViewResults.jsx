@@ -20,14 +20,24 @@ const ViewResults = () => {
     content = <div>Loading...</div>;
   } else if (resultsStatus === 'succeeded') {
     content = (
-      <ul>
-        {results.map((result) => (
-          <li key={result.examId}>
-            <h3>{result.examName}</h3>
-            <p>Score: {result.score}</p>
-          </li>
-        ))}
-      </ul>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Exam Name</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {results.map((result) => (
+            <tr key={result.examId}>
+              <td>{result.studentName}</td>
+              <td>{result.examName}</td>
+              <td>{result.score}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
   } else if (resultsStatus === 'failed') {
     content = <div>{error}</div>;

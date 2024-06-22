@@ -59,13 +59,13 @@ const Login = () => {
                 localStorage.setItem('user', JSON.stringify(decoded));
                 localStorage.setItem('role', decoded.role);
                 setMessage('Login successful!');
-                console.log('after set msg')
-
-                // onLogin();
-                console.log('after on login')
-                navigate('/dashboard');
-                // navigate('/register');
-                console.log('after nav')
+                if(decoded.role === "admin"){
+                    navigate('/AdminDashboard')
+                }else if(decoded.role === "user"){
+                    navigate('/StudentDashboard')
+                }
+                // navigate('/dashboard');
+                // 
             } else {
                 setMessage('Login failed!');
             }

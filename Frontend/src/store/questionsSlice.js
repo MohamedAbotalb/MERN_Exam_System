@@ -19,12 +19,13 @@ export const fetchQuestionsByExamId = createAsyncThunk('questions/fetchQuestions
 
 
 export const addQuestion = createAsyncThunk('questions/addQuestion', async ({ examId, newQuestion }) => {
+  console.log(newQuestion);
   const response = await axios.post(`/exams/${examId}/questions`, newQuestion);
   return response.data;
 });
 
-export const updateQuestion = createAsyncThunk('questions/updateQuestion', async ({ questionId, updatedQuestion }) => {
-  const response = await axios.put(`/questions/${questionId}`, updatedQuestion);
+export const updateQuestion = createAsyncThunk('questions/updateQuestion', async ({examId, questionId, newQuestion }) => {
+  const response = await axios.put(`/exams/${examId}/questions/${questionId}`, newQuestion);
   return response.data;
 });
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addQuestion, updateQuestion } from '../../store/questionsSlice';
+import { addQuestion, updateQuestion ,fetchQuestionsByExamId} from '../../store/questionsSlice';
 
 const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
   const dispatch = useDispatch();
@@ -25,13 +25,15 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
       examId,
     };
 
-    if (questionToEdit) {
-      dispatch(updateQuestion({ ...questionToEdit, ...newQuestion }));
-    } else {
-      dispatch(addQuestion({ examId, ...newQuestion }));
-    }
+    const action = questionToEdit
+      ? updateQuestion({ examId, questionId: questionToEdit._id, newQuestion })
+      : addQuestion({ examId, newQuestion });
 
-    onHide();
+    dispatch(action)
+      .then(() => {
+        dispatch(fetchQuestionsByExamId(examId));
+        onHide();
+      });
   };
 
   const handleOptionChange = (index, value) => {

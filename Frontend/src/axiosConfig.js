@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-TOKEN': getCsrfToken(),
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njc1OTVhMWY1NzI2ODMwYjg1YWZiOGUiLCJ1c2VybmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTkwNDM3OTksImV4cCI6MTcxOTEzMDE5OX0.5CvtCV_fPdGDjoNAcJDYObQOkUtj_tqFlynQ9YwQa3E'
   },
   withCredentials: true, // Important for CSRF token handling
 });

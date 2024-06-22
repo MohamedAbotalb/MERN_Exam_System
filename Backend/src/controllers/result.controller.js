@@ -140,15 +140,14 @@ const deleteResult = async (req, res) => {
   }
 };
 
-
-const getResultsCount = async(req, res, next)=>{
-  try{
+const getResultsCount = async (req, res, next) => {
+  try {
     const resultsCount = await Result.countDocuments();
-  res.status(200).json({ success: true, data: resultsCount });
-} catch (error) {
-  next(error);
-}
-}
+    res.status(200).json({ success: true, data: resultsCount });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   submitResult,

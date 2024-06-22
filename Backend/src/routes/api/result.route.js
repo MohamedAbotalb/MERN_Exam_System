@@ -2,11 +2,11 @@ const router = require('express').Router();
 const {
   submitResult,
   getAllResults,
-  getResultsCount,
   getResultById,
   getUserResults,
-  getResultsForLoggedInUser,
   deleteResult,
+  getResultsCount,
+  getResultsForLoggedInUser,
 } = require('../../controllers/result.controller');
 const { isUser, isAdmin } = require('../../middlewares/auth.middleware');
 
@@ -81,12 +81,7 @@ router.post(
  */
 router.get('/', isAdmin, getAllResults);
 
-router.get(
-  '/count',
-  isAdmin,
-  getResultsCount
-);
-
+router.get('/count', isAdmin, getResultsCount);
 
 /**
  * @openapi

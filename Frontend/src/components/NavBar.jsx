@@ -1,15 +1,13 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export function NavBar() {
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    navigate('/login');
+    window.location.href = '/';
   };
 
   const isLoggedIn = localStorage.getItem('token');

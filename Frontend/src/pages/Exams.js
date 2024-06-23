@@ -11,10 +11,9 @@ const Exams = () => {
     dispatch(fetchExams());
   }, [dispatch]);
 
-
   return (
     <div>
-      <h2>Exams</h2>
+      <h2 className='my-3'>Exams</h2>
       <ExamTable />
     </div>
   );

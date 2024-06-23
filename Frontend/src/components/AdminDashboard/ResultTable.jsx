@@ -18,6 +18,8 @@ const ResultTable = () => {
           <tr>
             <th>User</th>
             <th>Exam</th>
+            <th>Total Mark</th>
+            <th>Pass Mark</th>
             <th>Score</th>
             <th>Status</th>
             <th>Date</th>
@@ -28,6 +30,8 @@ const ResultTable = () => {
             <tr key={result._id}>
               <td>{result.user.username}</td>
               <td>{result.exam.name}</td>
+              <td>{result.exam.totalMarks}</td>
+              <td>{result.exam.passMarks}</td>
               <td>{result.score}</td>
               <td>{result.status}</td>
               <td>{new Date(result.createdAt).toLocaleDateString()}</td>

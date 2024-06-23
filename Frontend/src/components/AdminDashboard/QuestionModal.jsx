@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addQuestion, updateQuestion ,fetchQuestionsByExamId} from '../../store/questionsSlice';
+import {
+  addQuestion,
+  updateQuestion,
+  fetchQuestionsByExamId,
+} from '../../store/questionsSlice';
 
 const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
   const dispatch = useDispatch();
@@ -29,11 +33,10 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
       ? updateQuestion({ examId, questionId: questionToEdit._id, newQuestion })
       : addQuestion({ examId, newQuestion });
 
-    dispatch(action)
-      .then(() => {
-        dispatch(fetchQuestionsByExamId(examId));
-        onHide();
-      });
+    dispatch(action).then(() => {
+      dispatch(fetchQuestionsByExamId(examId));
+      onHide();
+    });
   };
 
   const handleOptionChange = (index, value) => {
@@ -43,7 +46,7 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} backdrop='static'>
       <Modal.Header closeButton>
         <Modal.Title>
           {questionToEdit ? 'Edit Question' : 'Add Question'}
@@ -56,6 +59,8 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
             <Form.Control
               type='text'
               value={name}
+              className='my-2'
+              placeholder='Enter Question Name'
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
@@ -78,6 +83,7 @@ const QuestionModal = ({ show, onHide, examId, questionToEdit }) => {
             <Form.Control
               type='text'
               value={correctAnswer}
+              placeholder='Enter Correct Answer'
               onChange={(e) => setCorrectAnswer(e.target.value)}
             />
           </Form.Group>

@@ -17,7 +17,7 @@ const axiosInstance = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-TOKEN': getCsrfToken(),
-    'Authorization': `Bearer ${getToken()}`,
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
   withCredentials: true,
 });
@@ -37,5 +37,14 @@ axiosInstance.interceptors.request.use(async (config) => {
 
   return config;
 });
+
+// Response interceptor to handle errors globally
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('Response error:', error.response || error.message);
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;

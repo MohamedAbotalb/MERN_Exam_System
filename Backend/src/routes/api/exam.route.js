@@ -1,5 +1,9 @@
 const { Router } = require('express');
-const { isAdmin, isUser } = require('../../middlewares/auth.middleware');
+const {
+  isAdmin,
+  isUser,
+  isSelfParams,
+} = require('../../middlewares/auth.middleware');
 const {
   addExam,
   getExam,
@@ -25,6 +29,9 @@ const {
   validateQuestionUpdate,
 } = require('../../middlewares/validation/question.validator');
 const validationResult = require('../../middlewares/validation/validationResult');
+const {
+  validateUserId,
+} = require('../../middlewares/validation/result.validator');
 
 const router = Router();
 
@@ -91,7 +98,13 @@ router.get('/', getExams);
  *       500:
  *         description: Server error
  */
-router.get('/available', isUser, getAvailableExamsForUser);
+router.get(
+  '/available/:userId',
+  isUser,
+  validateUserId,
+  validationResult,
+  getAvailableExamsForUser
+);
 
 router.get('/count', isAdmin, getExamsCount);
 

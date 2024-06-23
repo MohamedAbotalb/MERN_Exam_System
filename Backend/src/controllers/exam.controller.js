@@ -244,7 +244,7 @@ const removeQuestionFromExam = async (req, res, next) => {
 
 const getAvailableExamsForUser = async (req, res, next) => {
   try {
-    const { userId } = req.user;
+    const { userId } = req.params;
 
     if (!userId) {
       return res
@@ -255,14 +255,9 @@ const getAvailableExamsForUser = async (req, res, next) => {
     // Find exams that the user has not taken based on their ID not being in results.user
     const takenExams = await Result.find({ user: userId }).distinct('exam');
 
-    // Convert takenExamIds to ObjectId array
-    const takenExamIds = takenExams.map((examId) =>
-      mongoose.Types.ObjectId(examId)
-    );
-
     // Find exams where the _id is not in takenExamObjectIds
     const examsNotTaken = await Exam.find({
-      _id: { $nin: takenExamIds },
+      _id: { $nin: takenExams },
     }).populate('questions');
 
     res.status(200).json({ success: true, data: examsNotTaken });

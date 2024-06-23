@@ -12,7 +12,7 @@ export function Sidebar() {
           <>
             <li className='nav-item'>
               <NavLink className='nav-link text-white' to='/AdminDashboard/'>
-                Dashboard
+                Overview
               </NavLink>
             </li>
             <li className='nav-item rounded '>
@@ -35,11 +35,6 @@ export function Sidebar() {
         )}
         {role === 'user' && (
           <>
-            <li className='nav-item'>
-              <NavLink className='nav-link text-white' to='/StudentDashboard/'>
-                Dashboard
-              </NavLink>
-            </li>
             <li className='nav-item'>
               <NavLink
                 className='nav-link text-white'

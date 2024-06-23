@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Home.css';
+import '../css/Home.css';
 
 function Home() {
   return (

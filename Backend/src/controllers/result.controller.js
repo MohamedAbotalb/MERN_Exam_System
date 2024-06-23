@@ -42,8 +42,8 @@ const submitResult = async (req, res, next) => {
 
     // Create a new result
     const result = await Result.create({
-      user: userId,
-      exam: examId,
+      user: userId.toString(),
+      exam: examId.toString(),
       score,
       status,
     });
@@ -98,7 +98,7 @@ const getUserResults = async (req, res, next) => {
 
 const getResultsForLoggedInUser = async (req, res, next) => {
   try {
-    const { userId } = req.user;
+    const { userId } = req.params;
 
     if (!userId) {
       return res

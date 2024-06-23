@@ -3,13 +3,11 @@ const {
   submitResult,
   getAllResults,
   getResultById,
-  getUserResults,
   deleteResult,
   getResultsCount,
   getResultsForLoggedInUser,
 } = require('../../controllers/result.controller');
 const { isUser, isAdmin } = require('../../middlewares/auth.middleware');
-
 const {
   validateSubmitResult,
   validateResultId,
@@ -108,37 +106,6 @@ router.get('/:id', isAdmin, validateResultId, validationResult, getResultById);
 
 /**
  * @openapi
- * /results/user/{userId}:
- *   get:
- *     tags:
- *       - Result
- *     summary: Get results by user
- *     parameters:
- *       - in: path
- *         name: user
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Result'
- */
-router.get(
-  '/user/:userId',
-  isAdmin,
-  validateUserId,
-  validationResult,
-  getUserResults
-);
-
-/**
- * @openapi
  * /results/user:
  *   get:
  *     tags:
@@ -166,7 +133,13 @@ router.get(
  *       500:
  *         description: Server error
  */
-router.get('/user', isUser, getResultsForLoggedInUser);
+router.get(
+  '/user/:userId',
+  isUser,
+  validateUserId,
+  validationResult,
+  getResultsForLoggedInUser
+);
 
 /**
  * @openapi

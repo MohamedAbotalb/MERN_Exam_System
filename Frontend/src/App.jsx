@@ -6,7 +6,6 @@ import StudentDashboard from './pages/StudentDashboard';
 import Registration from './components/Registration';
 import Login from './components/Login';
 import Home from './pages/Home';
-// import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,24 +16,16 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Registration />} />
-
       <Route element={<SharedLayout />}>
-        <Route
-          path='AdminDashboard/*'
-          element={<ProtectedRoute allowedRoles={['admin']} />}
-        >
-          <Route index element={<AdminDashboard />} />
+        <Route exact element={<ProtectedRoute allowedRoles={['admin']} />}>
+          <Route exact path='AdminDashboard/*' element={<AdminDashboard />} />
         </Route>
-        <Route
-          path='StudentDashboard/*'
-          element={<ProtectedRoute allowedRoles={['user']} />}
-        >
-          <Route index element={<StudentDashboard />} />
+        <Route exact element={<ProtectedRoute allowedRoles={['user']} />}>
+          <Route path='StudentDashboard/*' element={<StudentDashboard />} />
         </Route>
       </Route>
-
+      <Route path='/register' element={<Registration />} />
+      <Route path='/login' element={<Login />} />
       <Route path='*' element={<Navigate to='/login' />} />
     </Routes>
   );

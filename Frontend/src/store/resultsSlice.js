@@ -31,7 +31,7 @@ export const submitResult = createAsyncThunk(
   'results/submitResult',
   async ({ examId, answers }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/submit', { examId, answers });
+      const response = await axios.post('/results/submit', { examId, answers });
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -45,9 +45,9 @@ export const fetchUserResults = createAsyncThunk(
   async (userId) => {
     try {
       const response = await axios.get(`/results/user/${userId}`);
-      return response.data.data; // Return the results data from the response
+      return response.data.data;
     } catch (error) {
-      throw Error(error.response.data.message); // Throw error with error message
+      throw Error(error.response.data.message);
     }
   }
 );
